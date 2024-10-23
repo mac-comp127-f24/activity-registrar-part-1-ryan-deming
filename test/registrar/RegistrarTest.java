@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SuppressWarnings("WeakerAccess")
 class RegistrarTest {
     // ------ Setup ------
-
     private TestObjectFactory factory = new TestObjectFactory();
     private Course comp127, math6, basketWeaving101;
     private Student sally, fred, zongo;
@@ -72,6 +71,13 @@ class RegistrarTest {
         factory.enrollMultipleStudents(comp127, 16);
         assertFalse(sally.enrollIn(comp127));
         assertFalse(comp127.getRoster().contains(sally));
+    }
+
+    @Test
+    void clientsCannotModifyCourses() {
+        assertThrows(UnsupportedOperationException.class, () -> {
+            sally.getCourses().add(comp127);
+         });
     }
 
     // ------ Post-test invariant check ------
