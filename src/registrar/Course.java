@@ -1,6 +1,8 @@
 package registrar;
 
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +16,7 @@ public class Course {
 
     private final String catalogNumber;
     private final String title;
-    private List<Student> roster = new ArrayList<>();
+    private Set<Student> roster = new HashSet<>();
     private int enrollmentLimit = UNLIMITED_ENROLLMENT;
 
     public Course(String catalogNumber, String title) {
@@ -51,8 +53,8 @@ public class Course {
     /**
      * Returns all students currently enrolled in this course.
      */
-    public List<Student> getRoster() {
-        return Collections.unmodifiableList(roster);
+    public Set<Student> getRoster() {
+        return Collections.unmodifiableSet(roster);
     }
 
     // 👋 Note that this method isn’t public! 👋
@@ -68,6 +70,9 @@ public class Course {
     //
     boolean enroll(Student student) {
         if (isFull()) {
+            return false;
+        }
+        if (roster.contains(student)) {
             return false;
         }
         roster.add(student);
